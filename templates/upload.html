@@ -13,7 +13,7 @@
             justify-content: center;
             min-height: 100vh;
             margin: 0;
-            background-image: url('https://storage.googleapis.com/bucksforbucks112233/robert-shunev-mS1nlYbq1kA-unsplash.jpg'); /*Just adding to check */
+            background-image: url('https://storage.googleapis.com/bucksforbucks112233/robert-shunev-mS1nlYbq1kA-unsplash.jpg'); /* Background Image */
             background-size: cover;
             background-position: center;
         }
@@ -26,23 +26,63 @@
         form {
             display: flex;
             flex-direction: column;
-            width: 300px;
-            background-color: rgba(255, 255, 255, 0.8); /* Optional: add a semi-transparent background to the form */
+            width: 90%; /* Responsive width */
+            max-width: 300px; /* Limit max width */
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
             padding: 20px;
             border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow */
         }
 
-        input[type="file"] {
+        input[type="file"],
+        input[type="submit"] {
+            width: 100%; /* Full width for inputs */
             margin-bottom: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50; /* Green background */
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease; /* Smooth transition */
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049; /* Darker green on hover */
         }
     </style>
 </head>
 <body>
     <h1>Upload an Image Here</h1>
 
-    <form method="POST" enctype="multipart/form-data">
-        <input type="file" name="file" accept="image/*">
+    <form method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+        <label for="fileInput" style="color: white;">Choose an image to upload:</label>
+        <input type="file" id="fileInput" name="file" accept="image/*">
         <input type="submit" value="Upload">
     </form>
+
+    <script>
+        function validateForm() {
+            const fileInput = document.getElementById('fileInput');
+            if (!fileInput.value) {
+                alert('Please select a file to upload!');
+                return false;
+            }
+            return true;
+        }
+
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+            if (file && file.size > maxSize) {
+                alert('File size must not exceed 5MB!');
+                event.target.value = ''; // Reset the file input
+            }
+        });
+    </script>
 </body>
 </html>
