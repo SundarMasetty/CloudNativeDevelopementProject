@@ -8,11 +8,13 @@
         .image-details-container {
             text-align: center;
             margin-top: 50px;
+            padding: 10px;
         }
 
         .image-details img {
-            max-width: 100%;
+            max-width: 90%;
             height: auto;
+            max-width: 500px; /* Ensure images don't grow too large */
         }
 
         .image-details figcaption {
@@ -21,8 +23,26 @@
         }
 
         .description {
-            font-size: 1em;
+            font-size: 1.2em;
             margin-top: 20px;
+            font-style: italic; /* Emphasize the text */
+            color: #555; /* Soft gray */
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50; /* Green button */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #45a049; /* Darker green on hover */
         }
     </style>
 </head>
@@ -31,12 +51,12 @@
     <div class="image-details-container">
         <figure class="image-details">
             <!-- Display the full image -->
-            <img src="{{ image_url }}" alt="{{ caption }}">
-            <figcaption>{{ caption }}</figcaption>
+            <img src="{{ image_url }}" alt="{{ caption }}" loading="lazy">
+            <figcaption>{{ caption if caption else "No Caption Available" }}</figcaption>
         </figure>
         
         <!-- Display the description -->
-        <p class="description">{{ description }}</p>
+        <p class="description">{{ description if description else "No Description Available" }}</p>
         
         <!-- Link to go back to the gallery -->
         <a href="{{ url_for('gallery') }}">Back to Gallery</a>
